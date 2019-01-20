@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
         <script src="js/main.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
         <title>Type Quick</title>
     </head>
     <body class="bg-dark text-white text-center">
@@ -15,8 +16,29 @@
             <div class="row">
                 <div class="col-md-6 mx-auto">
                     <p class="lead text-center">Type the following sentences quickly!</p>
-                    <h3 id="given-sentences" class="mb-5"></h3>
+                    <div class="card bg-secondary p-3 mb-5">
+                        <h3 id="given-sentences" class="text-left"></h3>
+                    </div>
                     <input id="user-input" type="text" class="form-control" placeholder="Start typing..." autofocus>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-6 mx-auto text-left">
+                    <h6>Time taken: <span id="time" class="text-warning"></span></h6>
+                    <h6>Words per minute (WPM): <span id="wpm" class="text-warning"></span></h6>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6 mx-auto">
+                    <button id="play-again" type="button" class="btn btn-outline-warning btn-block">Play Again</button>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-6 mx-auto">
+                    <div class="card card-body bg-secondary text-white">
+                        <h5>Instructions:</h5>
+                        <p>Type the sentences shown as fast as you can and track your typing speed in WPM! To play again, press the play again button above.</p>
+                    </div>
                 </div>
             </div>
         </div>
