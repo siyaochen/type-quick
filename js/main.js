@@ -6,6 +6,7 @@ let wordsTyped = 0;
 let isPlaying;
 
 const givenSentences = document.getElementById('given-sentences');
+const highlightedSentences = document.getElementById('highlighted');
 const userInput = document.getElementById('user-input');
 const timeDisplay = document.getElementById('time');
 const wpmDisplay = document.getElementById('wpm');
@@ -17,10 +18,13 @@ const sentences = [
 
 function init() {
     // Select and display sentence
-    let sentence = selectSentence(sentences);
-    givenSentences.innerHTML = sentence;
+    var selectedSentences = selectSentence(sentences);
+    givenSentences.innerHTML = selectedSentences;
 
-    // Check words typed somewhere here
+    // Check user input
+    userInput.addEventListener('input', function() {
+        match(selectedSentences)
+    });
 
     // Update time and wpm every second
     setInterval(showTime, 1000);
@@ -30,6 +34,22 @@ function init() {
 function selectSentence(sentencesArr) {
     const randIndex = Math.floor(Math.random() * sentencesArr.length);
     return sentencesArr[randIndex];
+}
+
+function match(sentencesToMatch) {
+    var isMatch = true;
+    var typed = userInput.value;
+
+    for (var i = 0; i < typed.length && isMatch; i++) {
+        if (typed.charAt(i) == sentencesToMatch.charAt(i)) {
+            highlightedSentences.innerHTML = sentencesToMatch.substring(0, i + 1);
+            givenSentences.innerHTML = sentencesToMatch.substring(i + 1);
+        }
+        else isMatch = false;
+    }
+
+    if (isMatch) return true;
+    else return false;
 }
 
 function showTime() {
