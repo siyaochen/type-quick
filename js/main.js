@@ -2,7 +2,6 @@ window.addEventListener('load', init);
 
 let time = 0;
 let wpm = 0;
-let wordsTyped = 0;
 let isPlaying;
 
 const givenSentences = document.getElementById('given-sentences');
@@ -47,9 +46,10 @@ function match(sentencesToMatch) {
         }
         else isMatch = false;
     }
-
-    if (isMatch) return true;
-    else return false;
+    if (i == 0) {
+        highlightedSentences.innerHTML = "";
+        givenSentences.innerHTML = sentencesToMatch;
+    }
 }
 
 function showTime() {
@@ -58,7 +58,7 @@ function showTime() {
 }
 
 function showWPM() {
-    if (time != 0) wpm = wordsTyped / time;
+    if (time != 0) wpm = parseInt(12 * userInput.value.length / time);
     else wpm = 0;
     wpmDisplay.innerHTML = wpm;
 }
