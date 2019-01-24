@@ -2,13 +2,13 @@ window.addEventListener('load', init);
 
 let time = 0;
 let wpm = 0;
-let isPlaying;
 
 const givenSentences = document.getElementById('given-sentences');
 const highlightedSentences = document.getElementById('highlighted');
 const userInput = document.getElementById('user-input');
 const timeDisplay = document.getElementById('time');
 const wpmDisplay = document.getElementById('wpm');
+const playAgainButton = document.getElementById('play-again');
 
 // Hard code possible sentences for now
 const sentences = [
@@ -20,9 +20,41 @@ function init() {
     var selectedSentences = selectSentence(sentences);
     givenSentences.innerHTML = selectedSentences;
 
+    // Check user input for start of game
+    userInput.addEventListener('input', function(e) {
+        // Select and display sentence
+        var selectedSentences = selectSentence(sentences);
+        givenSentences.innerHTML = selectedSentences;
+        e.target.removeEventListener('input', arguments.callee);
+        play(selectedSentences);
+    });
+
+    playAgainButton.addEventListener('click', function(e) {
+        play(null);
+    });
+}
+
+function play(selectedSentences) {
+    // Reset values
+    time = 0;
+    wpm = 0;
+    userInput.value = "";
+    userInput.focus();
+
+    // Select sentences if not given
+    if (!selectedSentences) {
+        var selectedSentences = selectSentence(sentences);
+        highlightedSentences.innerHTML = null;
+        givenSentences.innerHTML = selectedSentences;
+    }
+
     // Check user input
-    userInput.addEventListener('input', function() {
-        match(selectedSentences)
+    userInput.addEventListener('input', function(e) {
+        if (match(selectedSentences)) {
+            // Start over
+            e.target.removeEventListener('input', arguments.callee);
+            return;
+        }
     });
 
     // Update time and wpm every second
@@ -50,6 +82,11 @@ function match(sentencesToMatch) {
         highlightedSentences.innerHTML = "";
         givenSentences.innerHTML = sentencesToMatch;
     }
+
+    if (typed.length == sentencesToMatch.length && isMatch) {
+        return true;
+    }
+    return false;
 }
 
 function showTime() {
