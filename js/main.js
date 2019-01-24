@@ -10,20 +10,15 @@ const timeDisplay = document.getElementById('time');
 const wpmDisplay = document.getElementById('wpm');
 const playAgainButton = document.getElementById('play-again');
 
-// Hard code possible sentences for now
-const sentences = [
-"Jealousy, turning saints into the sea. Swimming through sick lullabies, choking on your alibis. But it's just the price I pay, destiny is calling me. Open up my eager eyes, 'cause I'm Mr. Brightside."
-];
-
 function init() {
     // Select and display sentence
-    var selectedSentences = selectSentence(sentences);
+    var selectedSentences = selectSentence();
     givenSentences.innerHTML = selectedSentences;
 
     // Check user input for start of game
     userInput.addEventListener('input', function(e) {
         // Select and display sentence
-        var selectedSentences = selectSentence(sentences);
+        var selectedSentences = selectSentence();
         givenSentences.innerHTML = selectedSentences;
         e.target.removeEventListener('input', arguments.callee);
         play(selectedSentences);
@@ -43,7 +38,7 @@ function play(selectedSentences) {
 
     // Select sentences if not given
     if (!selectedSentences) {
-        var selectedSentences = selectSentence(sentences);
+        var selectedSentences = selectSentence();
         highlightedSentences.innerHTML = null;
         givenSentences.innerHTML = selectedSentences;
     }
@@ -60,11 +55,6 @@ function play(selectedSentences) {
     // Update time and wpm every second
     setInterval(showTime, 1000);
     setInterval(showWPM, 1000);
-}
-
-function selectSentence(sentencesArr) {
-    const randIndex = Math.floor(Math.random() * sentencesArr.length);
-    return sentencesArr[randIndex];
 }
 
 function match(sentencesToMatch) {
@@ -84,6 +74,7 @@ function match(sentencesToMatch) {
     }
 
     if (typed.length == sentencesToMatch.length && isMatch) {
+        alert("finished");
         return true;
     }
     return false;
