@@ -8,9 +8,13 @@ const highlightedSentences = document.getElementById('highlighted');
 const userInput = document.getElementById('user-input');
 const timeDisplay = document.getElementById('time');
 const wpmDisplay = document.getElementById('wpm');
+const congratsMsg = document.getElementById('congrats-msg');
 const playAgainButton = document.getElementById('play-again');
 
 function init() {
+    // Hide congrats message
+    congratsMsg.style.display = 'none';
+
     // Select and display sentence
     var selectedSentences = selectSentence();
     givenSentences.innerHTML = selectedSentences;
@@ -27,10 +31,12 @@ function init() {
 }
 
 function play(selectedSentences) {
-    // Reset values
+    // Reset values and formatting
     time = 0;
     wpm = 0;
     userInput.focus();
+    congratsMsg.style.display = 'none';
+
 
     // Select sentences if not given
     if (!selectedSentences) {
@@ -49,6 +55,7 @@ function play(selectedSentences) {
             e.target.removeEventListener('input', arguments.callee);
             clearInterval(timer);
             clearInterval(wpmTracker);
+            congratsMsg.style.display = 'block';
             return;
         }
     });
