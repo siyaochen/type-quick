@@ -16,7 +16,7 @@ function init() {
     congratsMsg.style.display = 'none';
 
     // Select and display sentence
-    var selectedSentences = selectSentence();
+     selectedSentences = selectSentence();
     givenSentences.innerHTML = selectedSentences;
 
     // Check user input for start of game
@@ -40,7 +40,7 @@ function play(selectedSentences) {
 
     // Select sentences if not given
     if (!selectedSentences) {
-        var selectedSentences = selectSentence();
+         selectedSentences = selectSentence();
         highlightedSentences.innerHTML = null;
         givenSentences.innerHTML = selectedSentences;
         userInput.value = "";
@@ -66,10 +66,10 @@ function play(selectedSentences) {
 }
 
 function match(sentencesToMatch) {
-    var isMatch = true;
-    var typed = userInput.value;
+     isMatch = true;
+     typed = userInput.value;
 
-    for (var i = 0; i < typed.length && isMatch; i++) {
+    for ( i = 0; i < typed.length && isMatch; i++) {
         if (typed.charAt(i) == sentencesToMatch.charAt(i)) {
             highlightedSentences.innerHTML = sentencesToMatch.substring(0, i + 1);
             givenSentences.innerHTML = sentencesToMatch.substring(i + 1);
