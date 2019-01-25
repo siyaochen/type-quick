@@ -17,9 +17,6 @@ function init() {
 
     // Check user input for start of game
     userInput.addEventListener('input', function(e) {
-        // Select and display sentence
-        var selectedSentences = selectSentence();
-        givenSentences.innerHTML = selectedSentences;
         e.target.removeEventListener('input', arguments.callee);
         play(selectedSentences);
     });
@@ -33,7 +30,6 @@ function play(selectedSentences) {
     // Reset values
     time = 0;
     wpm = 0;
-    userInput.value = "";
     userInput.focus();
 
     // Select sentences if not given
@@ -41,6 +37,9 @@ function play(selectedSentences) {
         var selectedSentences = selectSentence();
         highlightedSentences.innerHTML = null;
         givenSentences.innerHTML = selectedSentences;
+        userInput.value = "";
+    } else {
+        match(selectedSentences);
     }
 
     // Check user input
@@ -48,13 +47,15 @@ function play(selectedSentences) {
         if (match(selectedSentences)) {
             // Start over
             e.target.removeEventListener('input', arguments.callee);
+            clearInterval(timer);
+            clearInterval(wpmTracker);
             return;
         }
     });
 
     // Update time and wpm every second
-    setInterval(showTime, 1000);
-    setInterval(showWPM, 1000);
+    let timer = setInterval(showTime, 1000);
+    let wpmTracker = setInterval(showWPM, 1000);
 }
 
 function match(sentencesToMatch) {
@@ -74,7 +75,6 @@ function match(sentencesToMatch) {
     }
 
     if (typed.length == sentencesToMatch.length && isMatch) {
-        alert("finished");
         return true;
     }
     return false;
