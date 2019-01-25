@@ -40,7 +40,7 @@ function play(selectedSentences) {
 
     // Select sentences if not given
     if (!selectedSentences) {
-         selectedSentences = selectSentence();
+        selectedSentences = selectSentence();
         highlightedSentences.innerHTML = null;
         givenSentences.innerHTML = selectedSentences;
         userInput.value = "";
@@ -60,9 +60,17 @@ function play(selectedSentences) {
         }
     });
 
+    playAgainButton.addEventListener('click', function(e) {
+        e.target.removeEventListener('click', arguments.callee);
+        // Remove user input event listener here
+        clearInterval(timer);
+        clearInterval(wpmTracker);
+        return;
+    });
+
     // Update time and wpm every second
-    let timer = setInterval(showTime, 1000);
-    let wpmTracker = setInterval(showWPM, 1000);
+    var timer = setInterval(showTime, 1000);
+    var wpmTracker = setInterval(showWPM, 1000);
 }
 
 function match(sentencesToMatch) {
