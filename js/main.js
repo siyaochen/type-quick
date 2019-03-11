@@ -10,14 +10,26 @@ const timeDisplay = document.getElementById('time');
 const wpmDisplay = document.getElementById('wpm');
 const congratsMsg = document.getElementById('congrats-msg');
 const playAgainButton = document.getElementById('play-again');
+const highScoreDisplay = document.getElementById('high-score');
+const highScoreBox = document.getElementById('high-score-box');
 
 function init() {
     // Hide congrats message
     congratsMsg.style.display = 'none';
 
     // Select and display sentence
-     selectedSentences = selectSentence();
+    selectedSentences = selectSentence();
     givenSentences.innerHTML = selectedSentences;
+
+    // Store default high score
+    if (localStorage.getItem('highscore') === null) {
+        localStorage.setItem('highscore', '0');
+        highScoreBox.style.display = 'none';
+    } else {
+        highScoreDisplay.innerHTML = 'High Score: ' + localStorage.getItem('highscore');
+        highScoreBox.style.display = 'block';
+        console.log(localStorage.getItem('highscore'));
+    }
 
     // Check user input for start of game
     userInput.addEventListener('input', function(e) {
@@ -37,7 +49,6 @@ function play(selectedSentences) {
     userInput.focus();
     congratsMsg.style.display = 'none';
 
-
     // Select sentences if not given
     if (!selectedSentences) {
         selectedSentences = selectSentence();
@@ -56,6 +67,17 @@ function play(selectedSentences) {
             clearInterval(timer);
             clearInterval(wpmTracker);
             congratsMsg.style.display = 'block';
+
+            // Check high score
+            if (wpmDisplay.innerHTML > parseInt(localStorage.getItem('highscore'))) {
+                console.log(wpmDisplay.innerHTML);
+                console.log(localStorage.getItem('highscore'));
+                localStorage.setItem('highscore', wpmDisplay.innerHTML.toString());
+                console.log(localStorage.getItem('highscore'));
+                highScoreDisplay.innerText = 'High Score: ' + localStorage.getItem('highscore');
+                highScoreBox.style.display = 'block';
+            }
+
             return;
         }
     });
